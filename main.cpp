@@ -18,10 +18,10 @@ void ask_for_scores(double scores[], const int scores_size, string name) {
 }
 
 bool ask_again() {
-    char yes = 'y';
+    char input;
     cout << "Again? (y/n) ";
-    cin >> yes;
-    return char == 'y' || char == 'Y';
+    cin >> input;
+    return input == 'y' || input == 'Y';
 }
 
 int main() {
