@@ -17,10 +17,16 @@ void ask_for_scores(double scores[], const int scores_size, string name) {
     }
 }
 
+bool ask_again() {
+    char input;
+    cout << "Again? (y/n) ";
+    cin >> input;
+    return input == 'y' || input == 'Y';
+}
+
 int main() {
     // A change
     // For Quizes
-    char enter_another = 'y';
     bool again = true;
     // do {
     while (again) {
@@ -66,10 +72,7 @@ int main() {
 
         cout << "Final score: " << final_score << endl;
 
-        cout << "Again? (y/n) ";
-        cin >> enter_another;
-        cout << endl;
-        cout << again << endl;
+        again = ask_again();
     }
     // } while (again);
     return 0;
