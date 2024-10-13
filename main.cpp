@@ -2,18 +2,23 @@
 
 using namespace std;
 
+double ask_for_score(string name) {
+    double score;
+    int attempts = 0;
+    do {
+        if (attempts > 0) {
+            cout << "Score must be between 0 and 100, you entered: " << score << endl;
+        }
+        cout << "Enter score for " << name << " (0-100): ";
+        cin >> score;
+        attempts++;
+    } while (score < 0 || score > 100);
+    return score;
+}
+
 void ask_for_scores(double scores[], const int scores_size, string name) {
     for (int i = 0; i < scores_size; i++) {
-        bool second_try = false;
-        do {
-            if (second_try) {
-                cout << "Score must be between 0 and 100, you entered: " << scores[i] << endl;
-            }
-            cout << "Enter score for " << name << " #" << i + 1 << " (0-100): ";
-            cin >> scores[i];
-            cout << endl;
-            second_try = true;
-        } while (scores[i] < 0 || scores[i] > 100);
+        scores[i] = ask_for_score(name + " " + to_string(i + 1));
     }
 }
 
@@ -25,8 +30,6 @@ bool ask_again() {
 }
 
 int main() {
-    // A change
-    // For Quizes
     bool again = true;
     // do {
     while (again) {
@@ -45,32 +48,24 @@ int main() {
 
         ask_for_scores(midterm_scores, NUM_MIDTERMS, "Midterm");
 
-        const int FINAL = 1;
-        double final_scores[FINAL];
+        double final_exam_score = ask_for_score("Final Exam");
 
-        ask_for_scores(final_scores, FINAL, "Final");
+        // Start calculating final grade
+        double final_grade = final_exam_score * 0.30;
 
-
-        double final_score = 0;
-
-        cout << "Scores entered:" << endl;
         for (double quiz_score: quiz_scores) {
-            final_score += quiz_score * 0.075;
+            final_grade += quiz_score * 0.075;
         }
 
         for (double project_score: project_scores) {
-            final_score += project_score * 0.05;
+            final_grade += project_score * 0.05;
         }
 
         for (double midterm_score: midterm_scores) {
-            final_score += midterm_score * 0.15;
+            final_grade += midterm_score * 0.15;
         }
 
-        for (double final_score: final_scores) {
-            final_score += final_score * 0.30;
-        }
-
-        cout << "Final score: " << final_score << endl;
+        cout << "Final score: " << final_grade << endl;
 
         again = ask_again();
     }
